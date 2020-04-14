@@ -14,11 +14,18 @@ process.env.DATABASE =
   "mongodb+srv://dbMahmoud:asdf3456@cluster0-tsysc.mongodb.net/test?retryWrites=true&w=majority";
 
 let app = express();
-app.use(helmet());
+app.use(
+  helmet({
+    hidePoweredBy: {
+      setTo: "PHP 4.2.0",
+    },
+  })
+);
+app.use(helmet.noCache());
 
 // Testing (For FCC testing purposes only):
 app.use(cors({ origin: "*" }));
-// process.env.NODE_ENV = "test";
+process.env.NODE_ENV = "test";
 
 // This project needs to parse POST bodies:
 app.use(bodyParser.json());
