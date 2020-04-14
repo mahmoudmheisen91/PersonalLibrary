@@ -12,20 +12,20 @@ module.exports = function (app, db) {
     .get(function (req, res) {
       //response will be array of book objects
       //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
-      // if (!issue.issue_title || !issue.issue_text || !issue.created_by) {
-      //   res.status(404).type("text").send(error);
-      //   res.end();
-      // } else {
-      //   db.collection(project).insertOne(issue, (err, doc) => {
-      //     if (err) {
-      //       res.redirect("/");
-      //     } else {
-      //       issue._id = doc.insertedId;
-      //       res.json(issue);
-      //       res.end();
-      //     }
-      //   });
-      // }
+
+      db.collection("Library")
+        .find()
+        .toArray(function (err, books) {
+          if (err) {
+            res.redirect("/");
+          } else {
+            books.map((item) => {
+              item.commentcount = item.comments.length;
+              delete item.comments;
+            });
+            res.json(books);
+          }
+        });
     })
 
     .post(function (req, res) {
@@ -60,6 +60,24 @@ module.exports = function (app, db) {
     .get(function (req, res) {
       let bookid = req.params.id;
       //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
+
+      let error = "Missing Data";
+      if (!bookid) {
+        res.status(404).type("text").send(error);
+        res.end();
+      } else {
+        let book = { _id: new ObjectId(bookid) };
+        db.collection("Library")
+          .find(book)
+          .toArray((err, doc) => {
+            if (err) {
+              res.redirect("/");
+            } else {
+              res.json(doc);
+              res.end();
+            }
+          });
+      }
     })
 
     .post(function (req, res) {
@@ -83,7 +101,7 @@ module.exports = function (app, db) {
               res
                 .status(400)
                 .type("text")
-                .send("could not update " + _id);
+                .send("could not update " + bookid);
               res.end();
             } else {
               res.json(doc.value);

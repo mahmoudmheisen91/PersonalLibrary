@@ -103,7 +103,7 @@
 
       <div id="g2" class="api-test">
         <p id="label" class="center"><strong>API Test </strong>GET All Books</p>
-        <form id="testForm2" class="container">
+        <form action="/api/books" method="get" id="testForm2" class="container">
           <label id="f1"><code> GET /api/books/</code></label>
           <button id="f7b" type="submit">
             <i class="fa fa-info"></i> Get All Books
@@ -115,12 +115,13 @@
         <p id="label" class="center">
           <strong>API Test </strong>GET Book by ID
         </p>
-        <form id="testForm2a" class="container">
+        <form action="" method="get" id="testForm2a" class="container">
           <label id="f1"><code> GET /api/books/{_id}</code></label>
           <input
             id="f2"
+            class="id2aa"
             type="text"
-            name="_id"
+            name="id"
             placeholder="Book ID"
             required
           />
@@ -188,6 +189,11 @@
         $("#testForm1a").submit(function () {
           var id = $(".id").val();
           $(this).attr("action", "/api/books/" + id);
+        });
+
+        $("#testForm2a").submit(function () {
+          var id2 = $(".id2aa").val();
+          $(this).attr("action", "/api/books/" + id2);
         });
       });
     </script>
