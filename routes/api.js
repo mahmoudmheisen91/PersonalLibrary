@@ -53,6 +53,9 @@ module.exports = function (app, db) {
 
     .delete(function (req, res) {
       //if successful response will be 'complete delete successful'
+      db.collection("Library").remove();
+      res.send("complete delete successful");
+      res.end();
     });
 
   app
@@ -116,5 +119,24 @@ module.exports = function (app, db) {
     .delete(function (req, res) {
       let bookid = req.params.id;
       //if successful response will be 'delete successful'
+
+      if (!bookid) {
+        res.status(404).type("text").send("id error");
+        res.end();
+      } else {
+        let book = { _id: new ObjectId(bookid) };
+        db.collection("Library").findOneAndDelete(book, (err, doc) => {
+          if (err) {
+            res
+              .status(400)
+              .type("text")
+              .send("could not delete " + id);
+            res.end();
+          } else {
+            res.send("delete successful");
+            res.end();
+          }
+        });
+      }
     });
 };

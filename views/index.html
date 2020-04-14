@@ -137,7 +137,7 @@
         </p>
         <form id="testForm3" class="container">
           <label id="f1"><code> DELETE /api/books/</code></label>
-          <button id="f7c" type="submit">
+          <button class="del" id="f7c" type="submit">
             <i class="fa fa-trash"></i> Delete All Books
           </button>
         </form>
@@ -151,12 +151,13 @@
           <label id="f1"><code> DELETE /api/books/{_id}</code></label>
           <input
             id="f2"
+            class="book_id"
             type="text"
-            name="_id"
+            name="id"
             placeholder="Book ID"
             required
           />
-          <button id="f7c" type="submit">
+          <button id="f7c" class="del_id" type="submit">
             <i class="fa fa-trash"></i> Delete Book
           </button>
         </form>
@@ -194,6 +195,20 @@
         $("#testForm2a").submit(function () {
           var id2 = $(".id2aa").val();
           $(this).attr("action", "/api/books/" + id2);
+        });
+
+        $("#testForm3a").submit(function (e) {
+          let url = "/api/books/" + $(".book_id").val();
+          console.log(url);
+          $.ajax({
+            url: url,
+            type: "delete",
+            data: $("#testForm3a").serialize(),
+            success: function (data) {
+              // $("#f2a").text(JSON.stringify(data));
+            },
+          });
+          e.preventDefault();
         });
       });
     </script>
