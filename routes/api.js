@@ -73,7 +73,8 @@ module.exports = function (app, db) {
             if (err) {
               res.redirect("/");
             } else {
-              res.json(doc);
+              if (doc.length == 0) res.send("no book exists");
+              else res.json(doc);
               res.end();
             }
           });
