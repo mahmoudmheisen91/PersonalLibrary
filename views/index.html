@@ -160,6 +160,7 @@
           <button id="f7c" class="del_id" type="submit">
             <i class="fa fa-trash"></i> Delete Book
           </button>
+          <label class="del_l_2" id="f3"><code> Console.Log() </code></label>
         </form>
       </div>
     </div>
@@ -181,36 +182,5 @@
       crossorigin="anonymous"
     ></script>
     <script src="/public/client.js"></script>
-    <script>
-      /*
-       *  For #sampleposting to update form action url to test inputs book id
-       */
-
-      $(function () {
-        $("#testForm1a").submit(function () {
-          var id = $(".id").val();
-          $(this).attr("action", "/api/books/" + id);
-        });
-
-        $("#testForm2a").submit(function () {
-          var id2 = $(".id2aa").val();
-          $(this).attr("action", "/api/books/" + id2);
-        });
-
-        $("#testForm3a").submit(function (e) {
-          let url = "/api/books/" + $(".book_id").val();
-          console.log(url);
-          $.ajax({
-            url: url,
-            type: "delete",
-            data: $("#testForm3a").serialize(),
-            success: function (data) {
-              // $("#f2a").text(JSON.stringify(data));
-            },
-          });
-          e.preventDefault();
-        });
-      });
-    </script>
   </body>
 </html>

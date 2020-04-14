@@ -133,7 +133,7 @@ module.exports = function (app, db) {
               .send("could not delete " + id);
             res.end();
           } else {
-            res.send("delete successful");
+            res.json("delete successful");
             res.end();
           }
         });
